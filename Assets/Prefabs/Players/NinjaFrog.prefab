@@ -65,7 +65,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.04930383, y: -0.040227145}
+  m_Offset: {x: -0.04930383, y: -0.050907657}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -76,7 +76,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.015086055, y: 0.18169588}
+  m_Size: {x: 0.015086055, y: 0.12149659}
   m_EdgeRadius: 0
 --- !u!114 &2141647644395566534
 MonoBehaviour:
@@ -195,8 +195,8 @@ GameObject:
   - component: {fileID: 1397262307896258064}
   - component: {fileID: 4230628453140380624}
   - component: {fileID: 9031144394979291694}
-  - component: {fileID: 7029070331498637539}
   - component: {fileID: 5132310951093303829}
+  - component: {fileID: 1137737971770869491}
   m_Layer: 0
   m_Name: NinjaFrog
   m_TagString: Player
@@ -368,24 +368,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7029070331498637539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2326067387143743905}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f755a37fee5c7f4c9151a657f627d00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runSpeed: 2
-  jumpSpeed: 3
-  fallMultiplier: 0.5
-  lowJumpMultiplier: 1
-  spriteRenderer: {fileID: 9207819210916257648}
-  animator: {fileID: 1397262307896258064}
 --- !u!114 &5132310951093303829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +389,18 @@ MonoBehaviour:
   fallMultiplier: 0.5
   lowJumpMultiplier: 1
   animator: {fileID: 1397262307896258064}
+--- !u!114 &1137737971770869491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2326067387143743905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 096ba5e92ab720b438607058f464add1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3458003903175170198
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +557,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.04930383, y: -0.040227145}
+  m_Offset: {x: -0.039594263, y: -0.053820506}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -574,7 +568,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.015086055, y: 0.18169588}
+  m_Size: {x: 0.011202276, y: 0.11178711}
   m_EdgeRadius: 0
 --- !u!114 &6326146943208189287
 MonoBehaviour:
