@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8379116695205683994}
   - component: {fileID: 4306523293048310181}
   - component: {fileID: 810337358795364486}
+  - component: {fileID: 1862148472783797515}
   m_Layer: 0
   m_Name: SpikeEnemy
   m_TagString: Untagged
@@ -130,3 +131,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3600397, y: 0.3823831}
   m_EdgeRadius: 0
+--- !u!114 &1862148472783797515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8031648224404445777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 635415132f192d24486bb8f34f777ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
