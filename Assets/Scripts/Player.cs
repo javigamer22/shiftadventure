@@ -15,6 +15,7 @@ public class PlayerMove2 : MonoBehaviour
     public float jumpSpeed = 3;
 
     private bool shouldJump = false; // Variable para controlar el salto
+    private bool dobleSalto = false; // Activación doble salto
     private bool muerte = false;    // Define si el jugador está muerto
     private float tGameOver; // Tiempo desde que el player muere hasta que saltamos a GameOver
     public float fallMultiplier = 0.5f;
@@ -46,6 +47,47 @@ public class PlayerMove2 : MonoBehaviour
         {
             shouldJump = true;
         }
+        // Permito doble salto
+        if(
+                shouldJump == false
+                && Input.GetKeyDown("space")
+                && !dobleSalto
+                && rb2d.velocity.y != 0
+            )
+        {
+            shouldJump = true;
+            dobleSalto = true;
+            animator.SetBool("DoubleJump", true);
+            animator.SetBool("Running", false);
+            Debug.Log("Run 1 false!");
+        }
+
+        if ((dobleSalto && groundSensor.isBordered) || rb2d.velocity.y == 0)
+        {
+            dobleSalto = false;
+        }
+
+        if (
+                (leftSensor.isBordered || rightSensor.isBordered)
+                //&& Input.GetKeyDown("space")
+                //&& shouldJump
+                && rb2d.velocity.y < 0
+                && !groundSensor.isBordered
+            )
+        {
+            animator.SetBool("WallJump", true);
+            animator.SetBool("Running", false);
+            Debug.Log("Run 2 false!");
+        }
+        else
+        {
+            animator.SetBool("WallJump", false);
+        }
+
+        if (groundSensor.isBordered)
+        {
+            animator.SetBool("WallJump", false);
+        }
     }
     
     void FixedUpdate()
@@ -68,10 +110,11 @@ public class PlayerMove2 : MonoBehaviour
             {
                 rb2d.velocity = new Vector2(0, rb2d.velocity.y);
                 animator.SetBool("Running", false);
+                Debug.Log("Run 3 false!");
             }
         }
 
-        if(groundSensor.isBordered || leftSensor.isBordered || rightSensor.isBordered)
+        if(groundSensor.isBordered)// || leftSensor.isBordered || rightSensor.isBordered
         {
             animator.SetBool("Jump", false);
         }
@@ -79,6 +122,7 @@ public class PlayerMove2 : MonoBehaviour
         {
             animator.SetBool("Jump", true);
             animator.SetBool("Running", false);
+            Debug.Log("Run 1 false!");
         }
 
         if (shouldJump)
