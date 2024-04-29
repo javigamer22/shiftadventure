@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMove2 : MonoBehaviour
 {
+    public static PlayerMove2 instance;
     public CheckBorder groundSensor;
     public CheckBorder leftSensor;
     public CheckBorder rightSensor;
@@ -17,7 +18,9 @@ public class PlayerMove2 : MonoBehaviour
     private bool shouldJump = false; // Variable para controlar el salto
     private bool dobleSalto = false; // Activación doble salto
     private bool muerte = false;    // Define si el jugador está muerto
+    private int vidas = 3;
     private float tGameOver; // Tiempo desde que el player muere hasta que saltamos a GameOver
+    private Vector3 startPosition;
     public float fallMultiplier = 0.5f;
 
     public float lowJumpMultiplier = 1f;
@@ -27,15 +30,47 @@ public class PlayerMove2 : MonoBehaviour
     Rigidbody2D rb2d;
     SpriteRenderer spriteRenderer;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        Debug.Log("Awake called.");
+    }
+
     void Start()
     {
         muerte = false;
         tGameOver = 1.5f;
         rb2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Debug.Log("Player Creado!");
+        startPosition = transform.position;
     }
-   
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Posiciono el jugador en el origen (0,0,0)
+        transform.position = Vector3.zero;
+
+        // Asegura que el SpriteRenderer esté activado
+        GetComponent<SpriteRenderer>().enabled = true;
+    }
+
     void Update()
     {
         // Detecta si se presiona la tecla espacio
@@ -59,7 +94,6 @@ public class PlayerMove2 : MonoBehaviour
             dobleSalto = true;
             animator.SetBool("DoubleJump", true);
             animator.SetBool("Running", false);
-            Debug.Log("Run 1 false!");
         }
 
         if ((dobleSalto && groundSensor.isBordered) || rb2d.velocity.y == 0)
@@ -77,7 +111,6 @@ public class PlayerMove2 : MonoBehaviour
         {
             animator.SetBool("WallJump", true);
             animator.SetBool("Running", false);
-            Debug.Log("Run 2 false!");
         }
         else
         {
@@ -110,7 +143,6 @@ public class PlayerMove2 : MonoBehaviour
             {
                 rb2d.velocity = new Vector2(0, rb2d.velocity.y);
                 animator.SetBool("Running", false);
-                Debug.Log("Run 3 false!");
             }
         }
 
@@ -122,7 +154,6 @@ public class PlayerMove2 : MonoBehaviour
         {
             animator.SetBool("Jump", true);
             animator.SetBool("Running", false);
-            Debug.Log("Run 1 false!");
         }
 
         if (shouldJump)
@@ -145,15 +176,45 @@ public class PlayerMove2 : MonoBehaviour
         {
             tGameOver -= Time.deltaTime;
         }
-        else if (muerte && tGameOver <= 0.0f)
+        else if (muerte && tGameOver <= 0.0f && vidas <= 0)
         {
-            SceneManager.LoadScene("GameOver");
+            Debug.Log("Vidas = " + vidas);
+            Invoke("GameOver", 3.0f);
         }
+        else if (muerte && tGameOver <= 0.0f && vidas > 0)
+        {
+            muerte = false;
+            Debug.Log("Vidas = " + vidas);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
+    public int getVidas()
+    {
+        return vidas;
+    }
+
+    public void Desaparece()
+    {
+        spriteRenderer.enabled = false;
     }
 
     public void Kill()
     {
-        Debug.Log("Destruyo Player!!");
-        muerte = true;
+        if (!muerte)
+        {
+            vidas -= 1;
+            muerte = true;
+        }
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = startPosition;
+    }
+
+    private void GameOver()
+    {
+        SceneManager.LoadScene("GameOver");
     }
 }

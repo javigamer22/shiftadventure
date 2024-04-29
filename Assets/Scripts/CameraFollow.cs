@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player; // Referencia al jugador
+    private Transform player; // Referencia al jugador
     public float minX, maxX; // Límites para el movimiento horizontal de la cámara
     public float minY, maxY; // Límites para el movimiento vertical de la cámara
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     void Update()
     {

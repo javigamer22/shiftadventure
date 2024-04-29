@@ -8,7 +8,7 @@ public class DamageObject : MonoBehaviour
     private PlayerMove2 player;
     private void Start()
     {
-        Debug.Log("Enemigo Creado!");
+        
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -17,7 +17,6 @@ public class DamageObject : MonoBehaviour
             player = collision.gameObject.GetComponent<PlayerMove2>();
             playerAnimator = collision.gameObject.GetComponent<Animator>();
             playerAnimator.SetBool("Destroy", true);
-            Debug.Log("Player Damage");
             //Destroy(collision.gameObject, 1.0f);
             player.Kill();
         }
