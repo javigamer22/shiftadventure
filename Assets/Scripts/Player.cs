@@ -14,6 +14,7 @@ public class PlayerMove2 : MonoBehaviour
 
     public float runSpeed = 2;
     public float jumpSpeed = 3;
+    public float djumpSpeed = 2.5F;
 
     private bool shouldJump = false; // Variable para controlar el salto
     private bool dobleSalto = false; // Activación doble salto
@@ -93,6 +94,7 @@ public class PlayerMove2 : MonoBehaviour
             shouldJump = true;
             dobleSalto = true;
             animator.SetBool("DoubleJump", true);
+            animator.SetBool("Fall", false);
             animator.SetBool("Running", false);
         }
 
@@ -149,16 +151,28 @@ public class PlayerMove2 : MonoBehaviour
         if(groundSensor.isBordered)// || leftSensor.isBordered || rightSensor.isBordered
         {
             animator.SetBool("Jump", false);
+            animator.SetBool("Fall", false);
         }
         else
         {
             animator.SetBool("Jump", true);
+            if (rb2d.velocity.y < 0)
+            {
+                animator.SetBool("Fall", true);
+            }
             animator.SetBool("Running", false);
         }
 
         if (shouldJump)
         {
-            rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
+            if (dobleSalto)
+            {
+                rb2d.velocity = new Vector2(rb2d.velocity.x, djumpSpeed);
+            }
+            else
+            {
+                rb2d.velocity = new Vector2(rb2d.velocity.x, jumpSpeed);
+            }            
             shouldJump = false;
         }
 
@@ -215,6 +229,7 @@ public class PlayerMove2 : MonoBehaviour
 
     private void GameOver()
     {
+        Destroy(gameObject);
         SceneManager.LoadScene("GameOver");
     }
 }

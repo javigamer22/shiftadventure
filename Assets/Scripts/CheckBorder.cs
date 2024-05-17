@@ -13,7 +13,18 @@ public class CheckBorder : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        isBordered = true;
+        if (collision.CompareTag("Suelo") || collision.CompareTag("itemBox"))
+        {
+            isBordered = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Suelo"))
+        {
+            isBordered = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
